@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Game</title>
+	<style>
+		canvas {
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="game-canvas" width="800" height="600"></canvas>
+	<script>
+		// Define the Sprite class
+		class Sprite {
+			constructor(imageSrc, imageX, imageY, imageWidth, imageHeight) {
+				this.image = new Image();
+				this.image.src = imageSrc;
+				this.imageX = imageX;
+				this.imageY = imageY;
+				this.imageWidth = imageWidth;
+				this.imageHeight = imageHeight;
+			}
+		}
+
+		// Define the Entity class
+		class Entity {
+			constructor(x, y, width, height, sprite) {
+				this.x = x;
+				this.y = y;
+				this.width = width;
+				this.height = height;
+				this.sprite = sprite;
+			}
+		}
+
+		// Create the canvas and context
+		const canvas = document.getElementById('game-canvas');
+		const ctx = canvas.getContext('2d');
+
+		// Initialize the game loop
+		let gameLoopId = null;
+		let isGameRunning = false;
+		let tickInterval = 1000 / 30; // 30 fps
+
+		// Define the game loop functions
+		function startGame() {
+			isGameRunning = true;
+			gameLoopId = setInterval(tick, tickInterval);
+		}
+
+		function stopGame() {
+			isGameRunning = false;
+			clearInterval(gameLoopId);
+		}
+
+		// Define the game logic
+		let gameEntities = [];
+
+		function tick() {
+			// Run the game logic for each entity
+			for (let i = 0; i < gameEntities.length; i++) {
+				// Do something with gameEntities[i]
+			}
+
+			// Render the game
+			render();
+		}
+
+		function render() {
+			// Clear the canvas
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			// Draw each entity's sprite
+			for (let i = 0; i < gameEntities.length; i++) {
+				let entity = gameEntities[i];
+				ctx.drawImage(
+					entity.sprite.image,
+					entity.sprite.imageX,
+					entity.sprite.imageY,
+					entity.sprite.imageWidth,
+					entity.sprite.imageHeight,
+					entity.x,
+					entity.y,
+					entity.width,
+					entity.height
+				);
+			}
+		}
+
+		// Initialize the game entities
+		let sprite = new Sprite('https://i.imgur.com/9OysL0c.png', 0, 0, 32, 32);
+		let entity = new Entity(0, 0, 32, 32, sprite);
+		gameEntities.push(entity);
+
+		// Start the game loop
+		startGame();
+	</script>
+</body>
+</html>
